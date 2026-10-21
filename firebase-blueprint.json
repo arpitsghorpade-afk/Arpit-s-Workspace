@@ -1,0 +1,138 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile across student, teacher, school admin, parent, or super admin roles",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "role": { "type": "string", "enum": ["SUPER_ADMIN", "SCHOOL_ADMIN", "TEACHER", "STUDENT", "PARENT"] },
+        "schoolId": { "type": "string", "maxLength": 128 },
+        "schoolName": { "type": "string", "maxLength": 256 },
+        "grade": { "type": "number" },
+        "xp": { "type": "number" },
+        "level": { "type": "number" },
+        "streakDays": { "type": "number" }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "School": {
+      "title": "School",
+      "description": "K-12 educational institution or academy",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 256 },
+        "code": { "type": "string", "maxLength": 64 },
+        "city": { "type": "string", "maxLength": 128 },
+        "country": { "type": "string", "maxLength": 128 },
+        "plan": { "type": "string", "enum": ["Starter", "Pro Academy", "Global Enterprise"] },
+        "status": { "type": "string", "enum": ["ACTIVE", "PENDING", "TRIAL"] }
+      },
+      "required": ["id", "name", "code", "plan", "status"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "Academic course for Grade 1-12 STEM & AI",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 256 },
+        "grade": { "type": "number" },
+        "subject": { "type": "string", "maxLength": 128 },
+        "difficulty": { "type": "string", "enum": ["Beginner", "Intermediate", "Advanced"] }
+      },
+      "required": ["id", "title", "grade", "subject"]
+    },
+    "Assignment": {
+      "title": "Assignment",
+      "description": "Homework or laboratory assignment created by teacher",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "courseId": { "type": "string", "maxLength": 128 },
+        "teacherId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 256 },
+        "points": { "type": "number" },
+        "dueDate": { "type": "string", "maxLength": 32 }
+      },
+      "required": ["id", "courseId", "teacherId", "title", "points"]
+    },
+    "Submission": {
+      "title": "Submission",
+      "description": "Student work submitted for an assignment",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "assignmentId": { "type": "string", "maxLength": 128 },
+        "studentId": { "type": "string", "maxLength": 128 },
+        "content": { "type": "string", "maxLength": 10000 },
+        "status": { "type": "string", "enum": ["PENDING", "GRADED"] },
+        "gradeScore": { "type": "number" }
+      },
+      "required": ["id", "assignmentId", "studentId", "content", "status"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Student capstone project in the BUILD phase",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 256 },
+        "studentId": { "type": "string", "maxLength": 128 },
+        "studentName": { "type": "string", "maxLength": 128 },
+        "grade": { "type": "number" },
+        "subject": { "type": "string", "maxLength": 128 },
+        "summary": { "type": "string", "maxLength": 5000 },
+        "status": { "type": "string", "enum": ["DRAFT", "SUBMITTED", "VERIFIED", "NEEDS_REVISION"] }
+      },
+      "required": ["id", "title", "studentId", "grade", "subject", "status"]
+    },
+    "SkillRecord": {
+      "title": "SkillRecord",
+      "description": "Verified cryptographic credential for the Skill Passport",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "studentId": { "type": "string", "maxLength": 128 },
+        "skillName": { "type": "string", "maxLength": 256 },
+        "masteryLevel": { "type": "string", "enum": ["Apprentice", "Proficient", "Master", "Visionary"] },
+        "masteryScore": { "type": "number" },
+        "verificationHash": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "studentId", "skillName", "masteryLevel", "verificationHash"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and credentials"
+    },
+    "/schools/{schoolId}": {
+      "schema": "School",
+      "description": "K-12 school organizations"
+    },
+    "/courses/{courseId}": {
+      "schema": "Course",
+      "description": "Grade 1-12 curriculum courses"
+    },
+    "/assignments/{assignmentId}": {
+      "schema": "Assignment",
+      "description": "Classroom assignments"
+    },
+    "/submissions/{submissionId}": {
+      "schema": "Submission",
+      "description": "Student assignment submissions"
+    },
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "Student capstone projects"
+    },
+    "/skills/{skillId}": {
+      "schema": "SkillRecord",
+      "description": "Skill Passport verified badges"
+    }
+  }
+}

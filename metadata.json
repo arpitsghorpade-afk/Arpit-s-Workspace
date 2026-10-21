@@ -1,0 +1,6 @@
+{
+  "name": "AetherLearn AI - K-12 AI Education SaaS Platform",
+  "description": "Futuristic AI-powered education ecosystem for Grade 1-12 students with adaptive AI tutoring, real-world project workspaces, verified skill passports, and dedicated dashboards for teachers, schools, parents, and super admins.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
